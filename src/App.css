@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  padding: 40px;
+}
+
+.title {
+  text-align: center;
+  color: blue;
+  margin-bottom: 30px;
+}
+
+.courses {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+}
+
+.card h2 {
+  color: black;
+}
+
+.card p {
+  color: gray;
+}
+
+.card button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
