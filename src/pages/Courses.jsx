@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = "https://training-center-app-1.onrender.com";
+
 function Courses() {
   const [courses, setCourses] = useState([]);
   const [title, setTitle] = useState("");
@@ -14,16 +16,19 @@ function Courses() {
 
   // GET COURSES
   const fetchCourses = () => {
-    fetch("http://127.0.0.1:8000/courses/")
+    fetch(`${API_URL}/courses/`)
       .then((res) => res.json())
-      .then((data) => setCourses(data));
+      .then((data) => setCourses(data))
+      .catch((error) => console.log(error));
   };
 
   // ADD COURSE
   const addCourse = () => {
-    fetch("http://127.0.0.1:8000/courses/", {
+    fetch(`${API_URL}/courses/`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         title: title,
         description: description,
@@ -33,20 +38,22 @@ function Courses() {
         setTitle("");
         setDescription("");
         fetchCourses();
-      });
+      })
+      .catch((error) => console.log(error));
   };
 
   // DELETE COURSE
   const deleteCourse = (id) => {
-    fetch(`http://127.0.0.1:8000/courses/${id}/`, {
+    fetch(`${API_URL}/courses/${id}/`, {
       method: "DELETE",
-    }).then(() => fetchCourses());
+    })
+      .then(() => fetchCourses())
+      .catch((error) => console.log(error));
   };
 
   return (
     <div style={styles.page}>
 
-      {/* HEADER */}
       <div style={styles.header}>
         <h1>📚 Courses</h1>
 
@@ -58,8 +65,9 @@ function Courses() {
         </button>
       </div>
 
-      {/* FORM ADD */}
+
       <div style={styles.form}>
+
         <input
           placeholder="Course Title"
           value={title}
@@ -77,14 +85,24 @@ function Courses() {
         <button onClick={addCourse} style={styles.addBtn}>
           Add Course
         </button>
+
       </div>
 
-      {/* LIST */}
+
       <div style={styles.grid}>
+
         {courses.map((c) => (
+
           <div key={c.id} style={styles.card}>
-            <h3 style={{ color: "#1e3a8a" }}>{c.title}</h3>
-            <p style={{ color: "#555" }}>{c.description}</p>
+
+            <h3 style={{ color: "#1e3a8a" }}>
+              {c.title}
+            </h3>
+
+            <p style={{ color: "#555" }}>
+              {c.description}
+            </p>
+
 
             <button
               onClick={() => deleteCourse(c.id)}
@@ -92,17 +110,24 @@ function Courses() {
             >
               Delete
             </button>
+
           </div>
+
         ))}
+
       </div>
+
     </div>
   );
 }
 
 export default Courses;
 
-/* ===== STYLES ===== */
+
+// ===== STYLES =====
+
 const styles = {
+
   page: {
     padding: "30px",
     backgroundColor: "#f4f7fb",
@@ -110,12 +135,14 @@ const styles = {
     fontFamily: "Arial",
   },
 
+
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "20px",
   },
+
 
   backBtn: {
     backgroundColor: "#1e3a8a",
@@ -126,6 +153,7 @@ const styles = {
     cursor: "pointer",
   },
 
+
   form: {
     backgroundColor: "white",
     padding: "20px",
@@ -134,12 +162,14 @@ const styles = {
     boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
   },
 
+
   input: {
     padding: "10px",
     marginRight: "10px",
     borderRadius: "8px",
     border: "1px solid #ccc",
   },
+
 
   addBtn: {
     padding: "10px 15px",
@@ -150,11 +180,13 @@ const styles = {
     cursor: "pointer",
   },
 
+
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: "20px",
   },
+
 
   card: {
     backgroundColor: "white",
@@ -162,6 +194,7 @@ const styles = {
     borderRadius: "12px",
     boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
   },
+
 
   deleteBtn: {
     backgroundColor: "red",
@@ -172,4 +205,5 @@ const styles = {
     cursor: "pointer",
     marginTop: "10px",
   },
+
 };

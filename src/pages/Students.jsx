@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Students() {
-  const [students, setStudents] = useState([]);
+  const API_URL = "https://training-center-app-1.onrender.com";
 
+  const [students, setStudents] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -15,14 +16,15 @@ function Students() {
 
     if (!auth) {
       navigate("/");
+      return;
     }
 
     fetchStudents();
-  }, []);
+  }, [navigate]);
 
   // GET STUDENTS
   const fetchStudents = () => {
-    fetch("http://127.0.0.1:8000/students/")
+    fetch(`${API_URL}/students/`)
       .then((res) => res.json())
       .then((data) => {
         setStudents(data);
@@ -39,7 +41,7 @@ function Students() {
       return;
     }
 
-    fetch("http://127.0.0.1:8000/students/", {
+    fetch(`${API_URL}/students/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,10 +55,8 @@ function Students() {
         if (res.ok) {
           alert("Student Added Successfully 🔥");
 
-          // REFRESH DATA
           fetchStudents();
 
-          // CLEAR INPUTS
           setName("");
           setEmail("");
         } else {
@@ -71,7 +71,7 @@ function Students() {
 
   // DELETE STUDENT
   const deleteStudent = (id) => {
-    fetch(`http://127.0.0.1:8000/students/${id}/`, {
+    fetch(`${API_URL}/students/${id}/`, {
       method: "DELETE",
     })
       .then(() => {
@@ -91,7 +91,6 @@ function Students() {
         fontFamily: "Arial",
       }}
     >
-      {/* BACK BUTTON */}
       <Link
         to="/dashboard"
         style={{
@@ -103,7 +102,6 @@ function Students() {
         ⬅ Back To Dashboard
       </Link>
 
-      {/* PAGE TITLE */}
       <h1
         style={{
           color: "#1e3a8a",
@@ -114,7 +112,6 @@ function Students() {
         Students Management
       </h1>
 
-      {/* ADD STUDENT FORM */}
       <div
         style={{
           backgroundColor: "white",
@@ -172,7 +169,6 @@ function Students() {
         </button>
       </div>
 
-      {/* STUDENTS LIST */}
       <div
         style={{
           display: "grid",

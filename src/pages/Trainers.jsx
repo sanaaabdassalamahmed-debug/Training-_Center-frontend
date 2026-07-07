@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Trainers() {
-  const [trainers, setTrainers] = useState([]);
+  const API_URL = "https://training-center-app-1.onrender.com";
 
+  const [trainers, setTrainers] = useState([]);
   const [name, setName] = useState("");
   const [specialty, setSpecialty] = useState("");
 
@@ -14,21 +15,23 @@ function Trainers() {
 
     if (!auth) {
       navigate("/");
+      return;
     }
 
     fetchTrainers();
-  }, []);
+  }, [navigate]);
 
   // GET TRAINERS
   const fetchTrainers = () => {
-    fetch("http://127.0.0.1:8000/trainers/")
+    fetch(`${API_URL}/trainers/`)
       .then((res) => res.json())
-      .then((data) => setTrainers(data));
+      .then((data) => setTrainers(data))
+      .catch((err) => console.log(err));
   };
 
   // ADD TRAINER
   const addTrainer = () => {
-    fetch("http://127.0.0.1:8000/trainers/", {
+    fetch(`${API_URL}/trainers/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,21 +44,26 @@ function Trainers() {
       .then((res) => res.json())
       .then(() => {
         fetchTrainers();
-
         setName("");
         setSpecialty("");
-
-        alert("Trainer Added 🔥");
+        alert("Trainer Added Successfully ✅");
+      })
+      .catch(() => {
+        alert("Failed to Add Trainer ❌");
       });
   };
 
   // DELETE TRAINER
   const deleteTrainer = (id) => {
-    fetch(`http://127.0.0.1:8000/trainers/${id}/`, {
+    fetch(`${API_URL}/trainers/${id}/`, {
       method: "DELETE",
-    }).then(() => {
-      fetchTrainers();
-    });
+    })
+      .then(() => {
+        fetchTrainers();
+      })
+      .catch(() => {
+        alert("Delete Failed ❌");
+      });
   };
 
   return (
@@ -71,7 +79,6 @@ function Trainers() {
 
       <h1 style={{ color: "#1e3a8a" }}>Trainers</h1>
 
-      {/* ADD TRAINER */}
       <div
         style={{
           backgroundColor: "white",
@@ -122,7 +129,6 @@ function Trainers() {
         </button>
       </div>
 
-      {/* TRAINERS LIST */}
       <div
         style={{
           display: "grid",
