@@ -43,6 +43,11 @@ function Register() {
     <div
       style={{
         backgroundColor: "#f4f7fb",
+        padding:"30px",
+        borderRadius:"15px",
+        width:"320px",
+        maxWidth:"90%",
+        boxShadow:"0 4px 15px rgba(0,0,0,0.1)",
         height: "100vh",
         display: "flex",
         justifyContent: "center",
@@ -80,6 +85,7 @@ function Register() {
             marginBottom: "15px",
             borderRadius: "8px",
             border: "1px solid #ccc",
+            boxSizing:"border-box",
           }}
         />
 
