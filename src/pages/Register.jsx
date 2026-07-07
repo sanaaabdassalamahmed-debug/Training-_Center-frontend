@@ -43,11 +43,6 @@ function Register() {
     <div
       style={{
         backgroundColor: "#f4f7fb",
-        padding:"30px",
-        borderRadius:"15px",
-        width:"320px",
-        maxWidth:"90%",
-        boxShadow:"0 4px 15px rgba(0,0,0,0.1)",
         height: "100vh",
         display: "flex",
         justifyContent: "center",
@@ -66,9 +61,11 @@ function Register() {
       >
         <h1
           style={{
+            letterSpacing:"3px",
             textAlign: "center",
             color: "#1e3a8a",
             marginBottom: "30px",
+            fontSize:"28px",
           }}
         >
           Create Account
